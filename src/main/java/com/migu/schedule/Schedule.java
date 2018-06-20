@@ -156,6 +156,7 @@ public class Schedule {
             for (ConsumptionInfo cpi : cpiSet) {
                 consumptions[idx] += cpi.getConsumption();
                 cpis[idx].add(cpi);
+                idx++;
                 if (idx == nodeSize) {
                     idx = 0;
                 }
