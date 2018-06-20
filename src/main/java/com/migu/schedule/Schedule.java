@@ -16,10 +16,18 @@ public class Schedule {
     private TreeMap<Integer, ConsumptionInfo> taskIds = new TreeMap<Integer, ConsumptionInfo>();
 
     //挂起队列，根据消耗率分组
-    private TreeMap<Integer, TreeSet<ConsumptionInfo>> hangUpQueue = new TreeMap<Integer, TreeSet<ConsumptionInfo>>();
+    private TreeMap<Integer, TreeSet<ConsumptionInfo>> hangUpQueue = new TreeMap<Integer, TreeSet<ConsumptionInfo>>(new Comparator<Integer>() {
+        public int compare(Integer cur, Integer com) {
+            return com - cur;
+        }
+    });
 
     //服务器节点，根据nodeId分组
-    private TreeMap<Integer, TreeSet<ConsumptionInfo>> nodeServers = new TreeMap<Integer, TreeSet<ConsumptionInfo>>();
+    private TreeMap<Integer, TreeSet<ConsumptionInfo>> nodeServers = new TreeMap<Integer, TreeSet<ConsumptionInfo>>(new Comparator<Integer>() {
+        public int compare(Integer cur, Integer com) {
+            return com - cur;
+        }
+    });
 
     public int init() {
         taskIds = new TreeMap<Integer, ConsumptionInfo>();
@@ -148,8 +156,6 @@ public class Schedule {
         for (int i = 0; i < nodeSize; i++) {
             cpis[i] = new TreeSet<ConsumptionInfo>();
         }
-
-        TreeMap<Integer, TreeSet<ConsumptionInfo>> nodeServersBak = new TreeMap<Integer, TreeSet<ConsumptionInfo>>();
         int idx = 0;
         Collection<TreeSet<ConsumptionInfo>> cpiSetCol = hangUpQueue.values();
         for (TreeSet<ConsumptionInfo> cpiSet : cpiSetCol) {
